@@ -1,0 +1,52 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Clientes</h1>
+
+<div id="clientes">
+  <% @clientes.each do |cliente| %>
+    <%= render cliente %>
+    <p>
+      <%= link_to "Show this cliente", cliente %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New cliente", new_cliente_path %>
+
+<br>
+<hr>
+<%= link_to 'Atualizar conteúdo do hotwire', criar_novo_cliente_hotwire_path, data: { turbo_frame: 'cliente_hotwire_id_div' } %>
+
+<%= link_to 'Deletar cliente', cliente_path(Cliente.last), method: :delete, data: { turbo_frame: 'cliente_hotwire_id_div', confirm: 'Tem certeza?' } %>
+
+<%= turbo_frame_tag 'cliente_hotwire_id_div' do %>
+  <p>Este conteúdo será atualizado.</p>
+<% end %>
+
+
+
+
+<% @cliente = Cliente.first %>
+<%= turbo_frame_tag 'cliente_form' do %>
+  <%= form_with(model: @cliente) do |form| %>
+    <div>
+      <%= form.label :nome, style: "display: block" %>
+      <%= form.text_field :nome %>
+    </div>
+
+    <div>
+      <%= form.label :email, style: "display: block" %>
+      <%= form.text_field :email %>
+    </div>
+    <%= form.submit 'Atualizar Cliente' %>
+  <% end %>
+<% end %>
+
+<hr> Lista <hr>
+<%= turbo_frame_tag 'cliente_tabela' do %>
+  <table>
+    <!-- Seu código para renderizar a tabela aqui -->
+  </table>
+<% end %>
+
+
