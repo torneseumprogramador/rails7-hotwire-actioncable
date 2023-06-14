@@ -218,3 +218,50 @@ Você pode renderizar o componente em qualquer view com o seguinte código:
 ```erb
 <%= render ClienteCardComponent.new(cliente: @cliente) %>
 ```
+
+Um exemplo de um ViewComponent para um input genérico personalizado com classes CSS especiais:
+
+```ruby
+# app/components/custom_input_component.rb
+
+class CustomInputComponent < ViewComponent::Base
+  def initialize(form:, attribute:, classes: '')
+    @form = form
+    @attribute = attribute
+    @classes = classes
+  end
+
+  def call
+    content_tag(:div, class: 'custom-input') do
+      form.text_field(attribute, class: input_classes)
+    end
+  end
+
+  private
+
+  attr_reader :form, :attribute, :classes
+
+  def input_classes
+    default_classes = 'btn btn-desafio'
+    "#{default_classes} #{classes}"
+  end
+end
+```
+
+Neste exemplo, criamos um componente chamado `CustomInputComponent` que recebe três argumentos em seu construtor: `form`, `attribute` e `classes`. O `form` representa o objeto `form_with` que está sendo usado, `attribute` é o atributo do modelo e `classes` são as classes CSS adicionais que você deseja aplicar ao input.
+
+O método `call` é usado para renderizar o componente. Ele envolve o campo de texto (`text_field`) em uma div com a classe CSS `custom-input`. As classes personalizadas são adicionadas ao campo de texto usando o método `input_classes`, que combina as classes padrão com as classes fornecidas no argumento `classes`.
+
+Agora, você pode usar esse componente em suas views. Por exemplo:
+
+```erb
+<%= form_with model: @objeto do |form| %>
+  <%= render CustomInputComponent.new(form: form, attribute: :nome, classes: 'classe-extra') %>
+  <%= form.submit 'Salvar', class: 'btn btn-primary' %>
+<% end %>
+```
+
+Neste exemplo, estamos usando o componente `CustomInputComponent` para renderizar um campo de texto personalizado. Passamos o objeto `form` e o atributo `:nome` para o componente, juntamente com a classe extra `classe-extra`. Além disso, estamos usando o `form.submit` padrão do Rails para renderizar o botão de envio.
+
+Certifique-se de ajustar o código de acordo com as necessidades específicas do seu projeto, como as classes CSS desejadas e o atributo do modelo a ser usado.
+```
