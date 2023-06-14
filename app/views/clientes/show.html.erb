@@ -8,3 +8,6 @@
 
   <%= button_to "Destroy this cliente", @cliente, method: :delete %>
 </div>
+
+
+<%= render(ClienteCardComponent.new(cliente: @cliente)) %>
