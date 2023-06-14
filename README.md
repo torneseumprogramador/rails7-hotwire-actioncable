@@ -30,30 +30,6 @@ O Turbo Frames permite atualizar partes específicas da página sem recarregar o
 
 O Turbo Streams permite enviar atualizações para o navegador em tempo real, sem a necessidade de recarregar a página. Você pode usar `format.turbo_stream` no seu controlador para enviar atualizações Turbo Stream.
 
-## Trabalhando com ViewComponent
-
-O ViewComponent é uma biblioteca que permite criar componentes reutilizáveis para suas views. Você pode adicionar a gem do ViewComponent ao seu Gemfile:
-
-```ruby
-gem 'view_component', require: 'view_component/engine'
-```
-
-Execute `bundle install` para instalar a gem.
-
-Agora você pode gerar um novo componente usando o gerador fornecido pela gem:
-
-```bash
-rails generate component MeuComponente
-```
-
-Isso irá gerar os arquivos do componente. Você pode agora editar esses arquivos de acordo com as necessidades do seu projeto.
-
-## Recursos Adicionais
-
-- [Documentação Oficial do Hotwire](https://hotwired.dev/)
-- [Documentação Oficial do ViewComponent](https://viewcomponent.org/)
-
-
 Para Rails 7 já vem com o Hotwire integrado, o que torna ainda mais fácil começar a usar o Turbo e o Stimulus. Vamos ver como você pode começar a usá-los no seu aplicativo.
 
 Turbo
@@ -139,6 +115,29 @@ Em seguida, você pode associar este controlador a um botão em seu HTML:
 ```erb
 <button data-controller="button" data-action="click->button#click">Click me!</button>
 ```
+
+## Trabalhando com ViewComponent
+
+O ViewComponent é uma biblioteca que permite criar componentes reutilizáveis para suas views. Você pode adicionar a gem do ViewComponent ao seu Gemfile:
+
+```ruby
+gem 'view_component', require: 'view_component/engine'
+```
+
+Execute `bundle install` para instalar a gem.
+
+Agora você pode gerar um novo componente usando o gerador fornecido pela gem:
+
+```bash
+rails generate component MeuComponente
+```
+
+Isso irá gerar os arquivos do componente. Você pode agora editar esses arquivos de acordo com as necessidades do seu projeto.
+
+## Recursos Adicionais
+
+- [Documentação Oficial do Hotwire](https://hotwired.dev/)
+- [Documentação Oficial do ViewComponent](https://viewcomponent.org/)
 
 
 # Tutorial Completo de Rails 7 com Hotwire e ViewComponent
