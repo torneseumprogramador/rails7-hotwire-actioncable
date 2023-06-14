@@ -53,7 +53,93 @@ Isso irá gerar os arquivos do componente. Você pode agora editar esses arquivo
 - [Documentação Oficial do Hotwire](https://hotwired.dev/)
 - [Documentação Oficial do ViewComponent](https://viewcomponent.org/)
 
-Espero que este tutorial seja útil para você começar a usar o Hotwire e o ViewComponent no Rails 7. Se tiver mais perguntas ou precisar de ajuda adicional, sinta-se à vontade para perguntar!
+
+Para Rails 7 já vem com o Hotwire integrado, o que torna ainda mais fácil começar a usar o Turbo e o Stimulus. Vamos ver como você pode começar a usá-los no seu aplicativo.
+
+Turbo
+
+O Turbo permite que você crie interações rápidas sem recarregar a página inteira. Ele usa Turbo Frames e Turbo Streams para conseguir isso.
+
+Turbo Frames
+
+Turbo Frames permitem que você atualize uma seção da página sem recarregar todo o conteúdo.
+
+Por exemplo, vamos supor que você tenha uma lista de produtos e um formulário para adicionar um novo produto. Em vez de recarregar toda a página quando um novo produto é adicionado, você pode usar um Turbo Frame para atualizar apenas a lista de produtos.
+
+No seu formulário, você pode adicionar o atributo `data-turbo-frame` para indicar qual seção da página deve ser atualizada.
+
+```erb
+<%= turbo_frame_tag 'products' do %>
+  <% @products.each do |product| %>
+    <%= render product %>
+  <% end %>
+<% end %>
+```
+
+Em seguida, na sua ação `create` do controlador, você pode renderizar o Turbo Frame novamente para atualizar a lista de produtos.
+
+```ruby
+def create
+  @product = Product.new(product_params)
+
+  if @product.save
+    render turbo_stream: turbo_stream.append(:products, partial: 'products/product', locals: { product: @product })
+  else
+    render :new
+  end
+end
+```
+
+Turbo Streams
+
+Turbo Streams permitem que você envie atualizações para o navegador em tempo real, sem recarregar a página. Isso é feito por meio de WebSockets usando o ActionCable.
+
+Você pode enviar uma atualização Turbo Stream do seu controlador assim:
+
+```ruby
+def create
+  @message = Message.new(message_params)
+
+  if @message.save
+    render turbo_stream: turbo_stream.append(:messages, partial: 'messages/message', locals: { message: @message })
+  else
+    render :new
+  end
+end
+```
+
+Isso enviará um Turbo Stream para o navegador que adicionará a nova mensagem à lista de mensagens.
+
+Stimulus
+
+O Stimulus é uma pequena biblioteca JavaScript que permite adicionar interatividade ao seu HTML.
+
+Para usar o Stimulus, você precisa adicionar controladores Stimulus ao seu código. Cada controlador Stimulus está associado a um elemento HTML e pode responder a eventos desse elemento.
+
+Por exemplo, você pode criar um controlador Stimulus para lidar com cliques de botões assim:
+
+```javascript
+// app/javascript/controllers/button_controller.js
+import { Controller } from "stimulus"
+
+export default class extends Controller {
+  connect() {
+    console.log("Button controller connected!")
+  }
+
+  click(event) {
+    event.preventDefault()
+    console.log("Button clicked!")
+  }
+}
+```
+
+Em seguida, você pode associar este controlador a um botão em seu HTML:
+
+```erb
+<button data-controller="button" data-action="click->button#click">Click me!</button>
+```
+
 
 # Tutorial Completo de Rails 7 com Hotwire e ViewComponent
 
