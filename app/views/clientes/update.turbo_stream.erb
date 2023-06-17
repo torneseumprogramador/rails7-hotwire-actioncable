@@ -1,6 +1,7 @@
 <%= turbo_stream.replace 'cliente_tabela' do %>
     <%= turbo_frame_tag 'cliente_tabela' do %>
       <%= render partial: 'clientes/tabela', locals: { clientes: Cliente.all } %>
+      <%#= render TabelaDeClientesComponent.new(Cliente.all) %>
     <% end %>
 <% end %>
   

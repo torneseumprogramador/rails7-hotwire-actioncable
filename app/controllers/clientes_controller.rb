@@ -10,15 +10,16 @@ class ClientesController < ApplicationController
     # inclui dados na tela
     # render turbo_stream: turbo_stream.append(:cliente_hotwire_id_div, partial: 'clientes/clientes_hotwire', locals: { clientes: Cliente.all.limit(3).order(id: :desc) })
 
-    # substitui dados na tela
-    render turbo_stream: turbo_stream.replace(:cliente_hotwire_id_div, partial: 'clientes/clientes_hotwire', locals: { clientes: Cliente.all.limit(3).order(id: :desc) })
+    # # substitui dados na tela
+    # render turbo_stream: turbo_stream.replace(:cliente_hotwire_id_div, partial: 'clientes/clientes_hotwire', locals: { clientes: Cliente.all.limit(3).order(id: :desc) })
 
-    return
+    # return
 
     @cliente = Cliente.new({nome: "teste #{Time.now.to_i}", email: "teste #{Time.now.to_i}@gmail.com"})
   
     if @cliente.save
-      render turbo_stream: turbo_stream.append(:cliente_hotwire, partial: 'clientes/clientes_hotwire', locals: { clientes: Cliente.all.limit(3).order(id: :desc) })
+      # render turbo_stream: turbo_stream.append(:cliente_hotwire_id_div, partial: 'clientes/clientes_hotwire', locals: { clientes: Cliente.all.limit(3).order(id: :desc) })
+      render turbo_stream: turbo_stream.replace(:cliente_hotwire_id_div, partial: 'clientes/clientes_hotwire', locals: { clientes: Cliente.all.limit(3).order(id: :desc) })
     else
       render :new
     end
@@ -62,11 +63,10 @@ class ClientesController < ApplicationController
           partial: "clientes/tabela",
           locals: { clientes: Cliente.all }
         )
-        
+
         ActionCable.server.broadcast("clientes", turbo_stream)
 
-
-
+     
         format.turbo_stream
         format.html { redirect_to cliente_url(@cliente), notice: "Cliente was successfully updated." }
         format.json { render :show, status: :ok, location: @cliente }

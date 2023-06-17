@@ -1,0 +1,21 @@
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @clientes.each do |cliente| %>
+      <tr>
+        <td><%= cliente.nome %></td>
+        <td><%= cliente.email %></td>
+        <td>
+          <%= link_to 'Editar', edit_cliente_path(cliente) %> |
+          <%= link_to 'Deletar', cliente_path(cliente), method: :delete, data: { confirm: 'Você tem certeza?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

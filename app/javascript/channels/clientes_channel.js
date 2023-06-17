@@ -1,12 +1,13 @@
-import consumer from "channels/consumer"
+import consumer from "channels/consumer";
 
 consumer.subscriptions.create("ClientesChannel", {
   connected() {
+    // alert('conectou')
     // Called when the subscription is ready for use on the server
   },
 
   disconnected() {
-    // Called when the subscription has been terminated by the server
+    // alert('desconectou')
   },
 
   received(data) {
